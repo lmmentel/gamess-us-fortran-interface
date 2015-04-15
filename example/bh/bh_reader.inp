@@ -1,0 +1,14 @@
+&input
+    nao=64
+    nmo=57
+    nprint=4
+    oneepart=.false.
+    twoepart=.true.
+    readtwoeao=.true.
+    readtwoemo=.true.
+    readtwordm=.true.
+    dictfile='bh_cisdtq_6e_cc-pcvtz_R-2.5_NO.F10'
+    twointaofile='bh_cisdtq_6e_cc-pcvtz_R-2.5_NO.F08'
+    twointmofile='bh_cisdtq_6e_cc-pcvtz_R-2.5_NO.F09'
+    twordmfile='bh_cisdtq_6e_cc-pcvtz_R-2.5_NO.F15'
+/

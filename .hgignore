@@ -1,0 +1,11 @@
+syntax: glob
+*.x
+*.a
+*.so
+.*.swp
+*.mod
+*.o
+# ignore all the integrals
+*.F*
+# ignore the build dir
+./build/**

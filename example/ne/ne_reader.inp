@@ -1,0 +1,14 @@
+&input
+    nao=35
+    nmo=30
+    nprint=4
+    oneepart=.false.
+    twoepart=.true.
+    readtwoeao=.true.
+    readtwoemo=.true.
+    readtwordm=.true.
+    dictfile='ne_dz_guga.F10'
+    twointaofile='ne_dz_guga.F08'
+    twointmofile='ne_dz_guga.F09'
+    twordmfile='ne_dz_guga.F15'
+/

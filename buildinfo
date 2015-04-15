@@ -1,0 +1,103 @@
+# Targets
+target = {
+  'name'            : 'main',
+  'rootdirs'        : ['source'],
+  'buildsubdir'     : 'main',
+  'libraryname'     : 'ginterface',
+  'mainprogramfile' : 'main.f90', 
+  'skipdirs'        : [],
+  'skipfiles'       : [],
+  'dependson'       : [],
+  'exename'         : 'main.x',
+  'compilegroups'   : {
+  }
+}
+
+# Fortran file types
+fortranfiles = {
+  'freeformregex'    : '.*\.f90$',
+  'fixedformregex'   : '.*\.f$',
+}
+
+# Build configs
+defaultconfig = {
+  'name'        : 'default',
+  'buildsubdir' : 'default',
+  'compileroptions' : {
+    'archivecommand'     : 'ar -r',
+    'unarchivecommand'   : 'ar -d',
+    'ranlibcommand'      : 'ar -s',
+    'f77compiler'        : 'gfortran',
+    'f90compiler'        : 'gfortran',
+    'f77flags'           : '-c ', # -fdefault-integer-8',
+    'f90flags'           : '-c ', # -fdefault-integer-8',
+    'modpathoption'      : '-I',
+    'ccompiler'          : 'gcc',
+    'cflags'             : '-c -m64 -D_FILE_OFFSET_BITS=64 -Dpentium_linux_ifc -O3 -funroll-loops',
+    'link'               : 'gfortran',
+    'linkflags'          : '',
+    'prioritylibs'       : '',
+    'otherlibs'          : '',
+    'compilegroupflags' : {
+      'default'  : '-O2',
+      'fast'     : '-O3 -mp',
+      'safe'     : '-01',
+      'verysafe' : '-O0'
+    }
+  }
+}
+
+releaseconfig = {
+  'name'            : 'release',
+  'inherits'        : 'default',
+  'buildsubdir'     : 'release',
+  'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename']+'.release',
+  'compileroptions' : {
+    'compilegroupflags' : {
+      'default' : '-O0',
+      'safe'    : '-O0'
+    }
+  }
+}
+
+debugconfig = {
+  'name'            : 'debug',
+  'inherits'        : 'default',
+  'buildsubdir'     : 'debug',
+  'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename'],
+  'compileroptions' : {
+    'f90flags' : '-fdefault-integer-8 -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64',
+    'f77flags' : '-fdefault-integer-8 -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64',
+    'compilegroupflags' : {
+      'default' : '-O2',
+      'safe'    : '-O1'
+    }
+  }
+}
+
+profileconfig = {
+  'name'            : 'profile',
+  'inherits'        : 'default',
+  'buildsubdir'     : 'debug',
+  'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename'],
+  'compileroptions' : {
+    'f90flags'  : ' -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64 -pg',
+    'f77flags'  : ' -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64 -pg',
+    'linkflags' : '-pg',
+    'compilegroupflags' : {
+      'default' : '-O0',
+    }
+  }
+}
+
+#configs = [defaultconfig, releaseconfig, debugconfig]
+configs = [defaultconfig, debugconfig, releaseconfig, profileconfig]
+
+# Combine everything in buildinfo dictionary
+buildinfo = {
+  'builddir'      : '$FORAY_PROJECT_ROOT/build',
+  'fortranfiles'  : fortranfiles,
+  'targets'       : [target],
+  'defaultconfig' : 'debug',
+  'configs'       : configs
+}

@@ -1,0 +1,14 @@
+&input
+    nao=50
+    nmo=46
+    nprint=4
+    oneepart=.false.
+    twoepart=.true.
+    readtwoeao=.false.
+    readtwoemo=.true.
+    readtwordm=.true.
+    dictfile='h2_aug-cc-pvtz_ormas.F10'
+    twointaofile='h2_aug-cc-pvtz_ormas.F08'
+    twointmofile='h2_aug-cc-pvtz_ormas.F09'
+    twordmfile='h2_aug-cc-pvtz_ormas.F15'
+/
