@@ -4,7 +4,7 @@
     nprint=4
     oneepart=.false.
     twoepart=.true.
-    readtwoeao=.false.
+    readtwoeao=.true.
     readtwoemo=.true.
     readtwordm=.true.
     dictfile='h2_aug-cc-pvtz_ormas.F10'
