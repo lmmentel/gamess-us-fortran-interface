@@ -23,6 +23,7 @@ fortranfiles = {
 defaultconfig = {
   'name'        : 'default',
   'buildsubdir' : 'default',
+  'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename'],
   'compileroptions' : {
     'archivecommand'     : 'ar -r',
     'unarchivecommand'   : 'ar -d',
@@ -47,27 +48,14 @@ defaultconfig = {
   }
 }
 
-releaseconfig = {
-  'name'            : 'release',
-  'inherits'        : 'default',
-  'buildsubdir'     : 'release',
-  'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename']+'.release',
-  'compileroptions' : {
-    'compilegroupflags' : {
-      'default' : '-O0',
-      'safe'    : '-O0'
-    }
-  }
-}
-
 debugconfig = {
   'name'            : 'debug',
   'inherits'        : 'default',
   'buildsubdir'     : 'debug',
   'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename'],
   'compileroptions' : {
-    'f90flags' : '-fdefault-integer-8 -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64',
-    'f77flags' : '-fdefault-integer-8 -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64',
+    'f90flags' : '-c -fdefault-integer-8 -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64',
+    'f77flags' : '-c -fdefault-integer-8 -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64',
     'compilegroupflags' : {
       'default' : '-O2',
       'safe'    : '-O1'
@@ -75,29 +63,44 @@ debugconfig = {
   }
 }
 
-profileconfig = {
-  'name'            : 'profile',
+linux32config = {
+  'name'            : 'linux32',
   'inherits'        : 'default',
-  'buildsubdir'     : 'debug',
+  'buildsubdir'     : 'linux32',
   'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename'],
   'compileroptions' : {
-    'f90flags'  : ' -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64 -pg',
-    'f77flags'  : ' -g -Wall -fbacktrace -c -D_FILE_OFFSET_BITS=64 -pg',
-    'linkflags' : '-pg',
+    'f90flags' : '-c',
+    'f77flags' : '-c',
     'compilegroupflags' : {
-      'default' : '-O0',
+      'default' : '-O2',
+      'safe'    : '-O1'
+    }
+  }
+}
+
+linux64config = {
+  'name'            : 'linux64',
+  'inherits'        : 'default',
+  'buildsubdir'     : 'linux64',
+  'installdir'      : '$FORAY_PROJECT_ROOT/bin/'+target['exename'],
+  'compileroptions' : {
+    'f90flags' : '-c -fdefault-integer-8 -D_FILE_OFFSET_BITS=64',
+    'f77flags' : '-c -fdefault-integer-8 -D_FILE_OFFSET_BITS=64',
+    'compilegroupflags' : {
+      'default' : '-O2',
+      'safe'    : '-O1'
     }
   }
 }
 
 #configs = [defaultconfig, releaseconfig, debugconfig]
-configs = [defaultconfig, debugconfig, releaseconfig, profileconfig]
+configs = [defaultconfig, debugconfig, linux32config, linux64config]
 
 # Combine everything in buildinfo dictionary
 buildinfo = {
   'builddir'      : '$FORAY_PROJECT_ROOT/build',
   'fortranfiles'  : fortranfiles,
   'targets'       : [target],
-  'defaultconfig' : 'debug',
+  'defaultconfig' : 'linux64',
   'configs'       : configs
 }
