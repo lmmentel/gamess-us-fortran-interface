@@ -7,22 +7,26 @@ program read_integral
   use OneElectronModule
   use TwoElectronModule
   use IOModule
+  use CIModule
   implicit none
   logical               :: oneepart, twoepart, readtwoeao, readtwoemo, readtwordm
   character(len=100)    :: buffer, filename
-  character(len=100)    :: dictfile, twointaofile, twointmofile, twordmfile
+  character(len=100)    :: dictfile, twointaofile, twointmofile, twordmfile, civecfile
   type(dictionaryType)  :: dictionary
   type(energyType)      :: energy
   real(DP), allocatable :: twointao(:), twointmo(:), twordm(:)
   real(DP), allocatable :: S(:,:), H(:,:), T(:,:), X(:,:), Y(:,:), Z(:,:)
   real(DP), allocatable :: Vaomo(:,:), Vaono(:,:), Occ(:), E(:), hfocc(:)
+  real(DP), allocatable :: civec(:)
   integer(I8) :: nmo, nao, nt, lengthao, lengthmo, nprint
+  integer(I8) :: nstates, nconfs
   real(DP)    :: eee
 
   ! input processing
 
   namelist /input/ nao, nmo, nprint, oneepart, twoepart, readtwoeao, readtwoemo, &
- &                 readtwordm, dictfile, twointmofile, twointaofile, twordmfile
+ &                 readtwordm, dictfile, twointmofile, twointaofile, twordmfile, &
+ &                 civecfile
 
   ! set defaults
 
@@ -42,6 +46,7 @@ program read_integral
   open(unit=111, file=trim(filename), status='old', form='formatted', delim='apostrophe')
   read(111, nml=input)
 
+  write(*, *) civecfile
   ! stuff read from the dictionary file
 
   if (oneepart) then
@@ -78,6 +83,11 @@ program read_integral
     call print_energies(energy)
     call delete(dictionary)
     deallocate(S, H, T, X, Y, Z, Vaomo, Vaono, Occ, E, hfocc)
+
+    call readCIVectorSize(trim(civecfile), nstates, nconfs)
+    allocate(civec(nconfs))
+    call readCIVector(civec, trim(civecfile))
+    deallocate(civec)
   endif
 
   ! two-electron part
