@@ -102,6 +102,7 @@ program read_integral
 
     if (readtwoeao) then
       allocate(twointao(lengthao))
+      twointao = 0.0d00
       call ReadInAO(twointao, twointaofile)
       call printHeader("First few two-electron integrals in AO")
       if (nao <= nprint) then
@@ -113,6 +114,7 @@ program read_integral
 
     if (readtwoemo) then
       allocate(twointmo(lengthmo))
+      twointmo = 0.0d00
       call ReadInMO(twointmo, twointmofile)
       call printHeader("First few two-electron integrals in MO")
       if (nmo <= nprint) then
@@ -124,6 +126,7 @@ program read_integral
 
     if (readtwordm) then
       allocate(twordm(lengthmo))
+      twordm = 0.0d00
       call ReadInAO(twordm, twordmfile)
       call printHeader("Few first elements of the two-particle denisty matrix")
       if (nmo <= nprint) then
