@@ -281,7 +281,7 @@ contains
   integer(I8), intent(in) :: nb
   integer(I8)             :: i, j, k, l, ij, kl
   real(DP)                :: energy, cml
-  character(len=30), parameter :: Frmt = '(1x,4i5,2x,2f20.14)'
+  character(len=30), parameter :: Frmt = '(1x,4i5,2x,3f20.14)'
 
   cml = 0.0_DP
   ij = 0
@@ -307,6 +307,9 @@ contains
   real(I8), intent(in)  :: fi(:)
   integer(I8)           :: i, j, k, l, ij, kl, nb
 
+  real(DP), parameter :: tol = 1.0d-14
+  character(len=30), parameter :: frmt = '(2x,4i5,2x,f4.1,e30.16)'
+
   write(*,*)
    ij = 0
    do i = 1,nb
@@ -316,7 +319,7 @@ contains
        do k = 1,nb
          do l = 1,k
            kl = kl + 1
-             if(ij >= kl .and. abs(fi(address(i,j,k,l))) > 1.0e-10) write(*,'(2x,4i5,2x,f20.14)') i,j,k,l,fi(address(i,j,k,l))
+             if(ij >= kl .and. abs(fi(address(i,j,k,l))) > tol) write(*,frmt) i,j,k,l,factor(i,j,k,l),fi(address(i,j,k,l))
          enddo
        enddo
      enddo

@@ -10,7 +10,7 @@ module CIModule
 contains
 
   subroutine readCIVectorSize(filename, nstates, nconfs)
-! read CI eigenvector fro NFT12 file
+! read CI eigenvector from NFT12 file
   integer(IK), parameter :: nft12 = 12
 
     integer(IPGamess),   intent(inout)   :: nstates, nconfs
@@ -37,9 +37,17 @@ contains
 
     integer(IK) :: readStatus
 
+    logical :: ex, op
+    character (len=11) :: nam, acc, seq, fnn
+    integer :: irec, nr, length
+
     open(unit=nft12, file=trim(filename), status='old', form='unformatted')
     rewind(nft12)
 
+    inquire(nft12, exist=ex, opened=op, name=nam, access=acc, &
+    sequential=seq, form=fnn, recl=irec, nextrec=nr)
+    write(*,*) 'recl = ', irec
+    write(*,*) 'nextrec = ', nr
     read(nft12)
     read(nft12, iostat=readStatus) vector
     write(*,*) "read all the coefficients"
